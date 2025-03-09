@@ -103,10 +103,16 @@ public class Dieukhiennn extends LinearOpMode {
         
         linerRight = hardwareMap.get(DcMotor.class, "linerRight");
         linerRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linerLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         linerRight.setPower(SPEED);
+        linerLeft.setPower(SPEED);
+
         curPos = 0;
         linerRight.setTargetPosition(curPos);
         linerRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        linerLeft.setTargetPosition(curPos);
+        linerLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         
         
         
@@ -220,14 +226,17 @@ public class Dieukhiennn extends LinearOpMode {
             leftnang = Range.clip(drive2,-1, 1) ;
             rightnang  = Range.clip(drive2, -1, 1) ;
 
-            linerRight.setPower(leftnang);
-            linerLeft.setPower(rightnang);
+        //    linerRight.setPower(leftnang);
+        //    linerLeft.setPower(rightnang);
             
             
             double drive= gamepad2.left_stick_y * 1 ;
             nang = Range.clip(drive, -1, 0.4) ;
-      curPos = EXTEND_POS;
-        linerRight.setTargetPosition(curPos);
+       //curPos = EXTEND_POS;
+      //  linerRight.setTargetPosition(curPos);
+       // linerLeft.setTargetPosition(curPos);
+
+        
         motor.setPower(nang);
             
             
@@ -300,7 +309,11 @@ public class Dieukhiennn extends LinearOpMode {
 
          
         }  
-
+      if (gamepad2.dpad_up) {curPos = EXTEND_POS;
+            curPos += gamepad2.right_stick_y;
+            if (curPos > EXTEND_POS) curPos = EXTEND_POS;
+            else if (curPos < 0) curPos = 0;
+            linerRight.setTargetPosition((int)curPos);}
     
     
 
